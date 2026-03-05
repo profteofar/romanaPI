@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Ocupação Romana da Península Ibérica</title>
+    
+    <!-- Tipografia -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                    colors: {
+                        bronze: {
+                            50: '#fdf8f4',
+                            100: '#faefe6',
+                            200: '#f4dbcc',
+                            300: '#ecc0a8',
+                            400: '#e19d7b',
+                            500: '#d87e55',
+                            600: '#cd633b',
+                            700: '#ab4f31',
+                            800: '#89412a',
+                            900: '#6e3625',
+                            950: '#3b1a11',
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slight': 'bounce-slight 1s infinite',
+                    },
+                    keyframes: {
+                        'bounce-slight': {
+                            '0%, 100%': { transform: 'translateY(-5%)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
+                            '50%': { transform: 'translateY(0)', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Ícones Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Estilos personalizados essenciais */
+        body { background-color: #f5f5f4; color: #292524; }
+        
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-in-out; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Acordeão */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+        }
+        .accordion-content.open {
+            max-height: 2500px; /* Aumentado para acomodar textos muito longos */
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+
+        /* Flashcards (Quiz Cards) */
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+        
+        .flashcard-inner {
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+        
+        /* Modais */
+        .modal {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* Animações do Quiz */
+        .slide-in-right { animation: slideInRight 0.4s forwards; }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            z-index: 9999;
+            animation: fall linear forwards;
+        }
+        @keyframes fall {
+            to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Estilos de Impressão para o Certificado */
+        @media print {
+            body { 
+                background: white; 
+                color: black; 
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .no-print { display: none !important; }
+            .tab-content { display: none !important; }
+            #tab-avaliacao { display: block !important; }
+            
+            #certificate-view {
+                border: 8px double #1e40af !important;
+                box-shadow: none !important;
+                margin: 0 !important;
+                padding: 2rem !important;
+                width: 100% !important;
+                height: 100vh !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+            }
+            
+            /* Correção essencial: garante que o título não fica invisível na impressão */
+            h1.bg-clip-text {
+                background: none !important;
+                -webkit-text-fill-color: #1e3a8a !important; /* Azul escuro sólido */
+                color: #1e3a8a !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans selection:bg-bronze-200 selection:text-bronze-900">
+
+    <!-- Cabeçalho -->
+    <header class="bg-stone-900 text-stone-50 shadow-md border-b-4 border-bronze-600 no-print sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4 py-4 sm:flex sm:items-center sm:justify-between">
+            <div class="flex items-center gap-3">
+                <i data-lucide="landmark" class="w-8 h-8 text-bronze-400"></i>
+                <h1 class="text-2xl font-serif font-bold tracking-tight">Hispânia Romana</h1>
+            </div>
+            <div class="mt-4 sm:mt-0 flex items-center gap-4">
+                <div class="relative">
+                    <i data-lucide="user" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-stone-400"></i>
+                    <input type="text" id="userNameInput" placeholder="O seu nome..." class="pl-9 pr-4 py-2 bg-stone-800 border border-stone-700 rounded-md text-sm focus:outline-none focus:border-bronze-500 focus:ring-1 focus:ring-bronze-500 transition-colors w-full sm:w-64">
+                </div>
+                <button onclick="openModal('guideModal')" class="flex items-center gap-2 bg-stone-800 hover:bg-stone-700 text-stone-200 px-3 py-2 rounded-md transition-colors text-sm border border-stone-700">
+                    <i data-lucide="help-circle" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">Guia</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Navegação de Separadores -->
+        <nav class="bg-stone-800 border-t border-stone-700 overflow-x-auto scrollbar-hide">
+            <div class="max-w-6xl mx-auto px-4 flex space-x-1">
+                <button onclick="switchTab('narrativa')" class="tab-btn active px-4 py-3 text-sm font-medium border-b-2 border-bronze-500 text-bronze-400 flex items-center gap-2 whitespace-nowrap transition-colors" data-tab="narrativa">
+                    <i data-lucide="book-open" class="w-4 h-4"></i> Estudo & Multimédia
+                </button>
+                <button onclick="switchTab('resumos')" class="tab-btn px-4 py-3 text-sm font-medium border-b-2 border-transparent text-stone-400 hover:text-stone-200 flex items-center gap-2 whitespace-nowrap transition-colors" data-tab="resumos">
+                    <i data-lucide="layers" class="w-4 h-4"></i> Resumos Temáticos
+                </button>
+                <button onclick="switchTab('flashcards')" class="tab-btn px-4 py-3 text-sm font-medium border-b-2 border-transparent text-stone-400 hover:text-stone-200 flex items-center gap-2 whitespace-nowrap transition-colors" data-tab="flashcards">
+                    <i data-lucide="credit-card" class="w-4 h-4"></i> Cartões de Estudo
+                </button>
+                <button onclick="switchTab('avaliacao')" class="tab-btn px-4 py-3 text-sm font-medium border-b-2 border-transparent text-stone-400 hover:text-stone-200 flex items-center gap-2 whitespace-nowrap transition-colors" data-tab="avaliacao">
+                    <i data-lucide="gamepad-2" class="w-4 h-4"></i> Quiz Interativo
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="flex-grow max-w-6xl mx-auto w-full px-4 py-8 relative">
+        
+        <!-- TAB 1: Narrativa e Multimédia -->
+        <section id="tab-narrativa" class="tab-content active no-print">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Coluna Narrativa -->
+                <div class="lg:col-span-2 space-y-6">
+                    <article class="bg-white p-8 rounded-xl shadow-sm border border-stone-200 prose prose-stone max-w-none">
+                        <h2 class="text-3xl font-serif text-stone-900 border-b pb-4 mb-6">A Formação da Hispânia</h2>
+                        
+                        <p class="text-lg leading-relaxed text-stone-700">A conquista romana da Península Ibérica não foi um ato rápido, mas sim um processo árduo e descontínuo que durou cerca de duzentos anos, de <strong>218 a.C. até 19 a.C.</strong> O interesse inicial de Roma não era a "civilização", mas sim o controlo geoestratégico do Mediterrâneo (o seu <em>mare nostrum</em>) e o acesso aos imensos recursos minerais, especialmente as minas de ouro (como <em>Las Médulas</em>), prata, e ferro.</p>
+
+                        <h3 class="text-2xl font-serif text-stone-800 mt-8">A Feroz Resistência Indígena</h3>
+                        <p>O avanço romano enfrentou uma oposição tenaz, destacando-se a resistência dos Lusitanos. Liderados por <strong>Viriato</strong>, um brilhante estratega que sobreviveu ao massacre do pretor Galba, os Lusitanos recorreram a táticas de guerrilha e emboscadas. Conhecedores das regiões montanhosas, infligiram severas e humilhantes derrotas às legiões romanas. A incapacidade militar de Roma forçou-a a recorrer à traição, subornando aliados de Viriato para o assassinarem enquanto dormia em 139 a.C., precipitando a queda lusitana.</p>
+
+                        <div class="bg-stone-50 border-l-4 border-bronze-500 p-4 my-6 italic text-stone-600">
+                            "A Hispânia tornou-se o motor económico do Império. As suas riquezas naturais e a sua posição tornaram-na o cenário de uma profunda transformação cultural, jurídica e territorial."
+                        </div>
+
+                        <h3 class="text-2xl font-serif text-stone-800 mt-8">A Herança Cultural e Arquitetónica</h3>
+                        <p>Uma vez consolidada a ocupação, iniciou-se a <strong>romanização</strong>. As populações autóctones integraram-se organicamente na estrutura do império através de várias vias:</p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li><strong>Urbanismo Monumental:</strong> Construção de cidades (<em>civitas</em>) à semelhança de Roma, dotadas de fóruns, aquedutos, teatros e termas, que serviam como poderosa propaganda ideológica.</li>
+                            <li><strong>Logística:</strong> Uma intrincada rede de calçadas interligou o território, permitindo o rápido escoamento de riquezas, mas também a rápida difusão de ideias e cultura.</li>
+                            <li><strong>Latim e Direito:</strong> O latim vulgar sobrepôs-se às línguas locais, unificando a península e lançando as bases do português e castelhano. O Direito Romano forneceu estabilidade e regulação à propriedade.</li>
+                        </ul>
+
+                        <h3 class="text-2xl font-serif text-stone-800 mt-8">A Transição Religiosa: A Cristianização</h3>
+                        <p>Inicialmente perseguido pela negação ao culto imperial, o <strong>Cristianismo</strong> conquistou as massas com a sua mensagem de igualdade. Dois marcos fundamentais definiram a sua vitória: o <em>Édito de Milão</em> (313 d.C.), pelo Imperador Constantino, garantindo a liberdade de culto; e o <em>Édito de Tessalónica</em> (380 d.C.), pelo Imperador Teodósio, elevando-o a religião oficial do império.</p>
+                        
+                        <p>Quando o Império Romano do Ocidente colapsou no século V perante a pressão das invasões bárbaras, a infraestrutura da Igreja Católica sobreviveu. Serviu de ponte para os povos invasores (como os Suevos e Visigodos). Os Visigodos, unificando o território, adotaram posteriormente a língua, as leis e a religião (pela conversão de Recaredo em 589 d.C.), fazendo a transição definitiva da Antiguidade para a Idade Média ibérica.</p>
+                    </article>
+                </div>
+
+                <!-- Coluna Multimédia -->
+                <div class="space-y-6">
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200">
+                        <h3 class="font-serif font-bold text-stone-800 mb-4 flex items-center gap-2">
+                            <i data-lucide="image" class="w-5 h-5 text-bronze-600"></i> Materiais Visuais
+                        </h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button onclick="openGallery('infografia', 1)" class="relative group overflow-hidden rounded-lg aspect-square bg-stone-100 border border-stone-200 hover:border-bronze-400 transition-colors">
+                                <div class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                                    <i data-lucide="zoom-in" class="w-8 h-8 text-stone-400 group-hover:text-bronze-500 mb-2 transition-colors"></i>
+                                    <span class="text-sm font-medium text-stone-600 group-hover:text-bronze-700">Ver Infografia</span>
+                                </div>
+                            </button>
+                            <button onclick="openGallery('slides', 15)" class="relative group overflow-hidden rounded-lg aspect-square bg-stone-100 border border-stone-200 hover:border-bronze-400 transition-colors">
+                                <div class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                                    <i data-lucide="presentation" class="w-8 h-8 text-stone-400 group-hover:text-bronze-500 mb-2 transition-colors"></i>
+                                    <span class="text-sm font-medium text-stone-600 group-hover:text-bronze-700">Explorar Slides</span>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200">
+                        <h3 class="font-serif font-bold text-stone-800 mb-4 flex items-center gap-2">
+                            <i data-lucide="video" class="w-5 h-5 text-bronze-600"></i> Vídeo Resumo
+                        </h3>
+                        <div class="aspect-video bg-black rounded-lg overflow-hidden relative">
+                            <video controls class="w-full h-full object-cover">
+                                <source src="./video.mp4" type="video/mp4">
+                                O seu navegador não suporta a tag de vídeo.
+                            </video>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200">
+                        <h3 class="font-serif font-bold text-stone-800 mb-4 flex items-center gap-2">
+                            <i data-lucide="headphones" class="w-5 h-5 text-bronze-600"></i> Podcast
+                        </h3>
+                        <audio controls class="w-full h-12 rounded-full">
+                            <source src="./podcast.mp3" type="audio/mpeg">
+                            O seu navegador não suporta a tag de áudio.
+                        </audio>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: Resumos Detalhados (Acordeão) -->
+        <section id="tab-resumos" class="tab-content no-print">
+            <div class="max-w-4xl mx-auto space-y-4">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-serif font-bold text-stone-800">Resumos Explicativos Detalhados</h2>
+                    <p class="text-stone-600 mt-2">Versões integrais baseadas nas fontes documentais para revisão exaustiva.</p>
+                </div>
+
+                <!-- 1. A Conquista da Hispânia romana -->
+                <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
+                    <button onclick="toggleAccordion('acc1')" class="w-full px-6 py-4 flex items-center justify-between bg-white hover:bg-stone-50 transition-colors focus:outline-none">
+                        <span class="font-serif font-semibold text-lg text-stone-800 text-left">A Conquista da Hispânia Romana</span>
+                        <i data-lucide="chevron-down" id="icon-acc1" class="w-5 h-5 text-bronze-600 transition-transform duration-300"></i>
+                    </button>
+                    <div id="acc1" class="accordion-content bg-stone-50 px-6 border-t border-stone-100">
+                        <div class="prose prose-sm md:prose-base max-w-none text-stone-700 pb-4">
+                            <p>A conquista romana da Península Ibérica foi um processo descontínuo que durou cerca de duzentos anos, entre <strong>218 a.C. e 19 a.C.</strong>. Este longo período é dividido em três fases principais:</p>
+                            <ul class="space-y-4">
+                                <li><strong>1.ª Fase: Domínio do Sul e do Levante (218 a.C. – 197 a.C.)</strong><br>
+                                Esta etapa inicial ocorreu no contexto da <em>Segunda Guerra Púnica</em> entre Roma e Cartago. A intervenção romana começou com o desembarque em Empúries (Ampúrias) em 218 a.C., com o objetivo estratégico de cortar as linhas de abastecimento de Aníbal. O poder cartaginês foi definitivamente quebrado na Batalha de Ilipa (206 a.C.), permitindo a Roma controlar a costa mediterrânica e o vale do Guadalquivir. Em 197 a.C., Roma dividiu o território conquistado nas províncias de <em>Hispania Citerior</em> e <em>Hispania Ulterior</em>.</li>
+                                
+                                <li><strong>2.ª Fase: Conquista do Centro e do Oeste (155 a.C. – 133 a.C.)</strong><br>
+                                Roma avançou para o interior, enfrentando resistência feroz. Destacou-se a <em>Resistência Lusitana</em> sob a liderança de Viriato, que infligiu derrotas humilhantes a Roma até ao seu assassinato por traição em 139 a.C. Simultaneamente, ocorreu a <em>Guerra Numantina</em> contra os celtiberos, que culminou no cerco e queda de Numância em 133 a.C. (liderado por Cipião Emiliano). Seguiu-se um interregno no século I a.C., onde lutas internas romanas (Guerras Civis, Sertório, Pompeu, César) aceleraram a integração do território.</li>
+                                
+                                <li><strong>3.ª Fase: Conquista do Norte e Pacificação Final (29 a.C. – 19 a.C.)</strong><br>
+                                Motivada pela necessidade de consolidar fronteiras e garantir acesso às riquezas minerais (ouro e prata) do noroeste. O Imperador Augusto liderou as <em>Guerras Cântabras</em> contra galaicos, astures e cântabros. Após uma resistência desesperada (incluindo suicídios coletivos), o general Marco Agripa completou a pacificação em 19 a.C.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Viriato e a Insurreição da Lusitânia contra Roma -->
+                <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
+                    <button onclick="toggleAccordion('acc2')" class="w-full px-6 py-4 flex items-center justify-between bg-white hover:bg-stone-50 transition-colors focus:outline-none">
+                        <span class="font-serif font-semibold text-lg text-stone-800 text-left">Viriato e a Insurreição da Lusitânia contra Roma</span>
+                        <i data-lucide="chevron-down" id="icon-acc2" class="w-5 h-5 text-bronze-600 transition-transform duration-300"></i>
+                    </button>
+                    <div id="acc2" class="accordion-content bg-stone-50 px-6 border-t border-stone-100">
+                        <div class="prose prose-sm md:prose-base max-w-none text-stone-700 pb-4">
+                            <p>Viriato e os lusitanos resistiram ao domínio de Roma durante o século II a.C. com notável tenacidade, considerada uma das guerras de guerrilha mais difíceis da Antiguidade.</p>
+                            <ul class="space-y-3">
+                                <li><strong>Táticas de Guerrilha e Emboscadas:</strong> Os lusitanos evitavam batalhas em campo aberto contra as disciplinadas legiões. Utilizavam o seu vasto conhecimento do terreno montanhoso para atrair os romanos para zonas de desvantagem numérica e tática.</li>
+                                <li><strong>Mobilidade e Agilidade:</strong> Com guerreiros descritos como excecionalmente ágeis, executavam ataques rápidos e recuavam para as montanhas. Se perseguidos, os romanos entravam em terreno desconhecido, sofrendo perdas terríveis.</li>
+                                <li><strong>Unificação das Tribos sob Viriato:</strong> Viriato foi um sobrevivente do traiçoeiro massacre do pretor Sérvio Sulpício Galba em 150 a.C., conseguiu o feito inédito de unificar diversas tribos indígenas sob um comando comum. Sob a sua liderança, a resistência deixou de ser uma série de revoltas isoladas para se tornar um movimento de autodeterminação contra a exploração colonial.</li>
+                                <li><strong>Vitórias e Humilhação de Roma:</strong> As sucessivas vitórias humilharam pretores e cônsules. A dada altura, forçou Roma a assinar um tratado reconhecendo a independência lusitana e nomeando Viriato "amigo do povo romano".</li>
+                                <li><strong>A Traição:</strong> Incapazes de vencer militarmente, os Romanos usaram o suborno. O procônsul Cepião pagou a três oficiais de Viriato (Audax, Ditalco e Minuro) que o assassinaram enquanto dormia, em 139 a.C., desmoronando a resistência organizada.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. A Herança da Romanização na Península Ibérica -->
+                <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
+                    <button onclick="toggleAccordion('acc3')" class="w-full px-6 py-4 flex items-center justify-between bg-white hover:bg-stone-50 transition-colors focus:outline-none">
+                        <span class="font-serif font-semibold text-lg text-stone-800 text-left">A Herança da Romanização na Península Ibérica</span>
+                        <i data-lucide="chevron-down" id="icon-acc3" class="w-5 h-5 text-bronze-600 transition-transform duration-300"></i>
+                    </button>
+                    <div id="acc3" class="accordion-content bg-stone-50 px-6 border-t border-stone-100">
+                        <div class="prose prose-sm md:prose-base max-w-none text-stone-700 pb-4">
+                            <p>Um processo profundo de integração cultural, impulsionado pelo desejo das elites locais de ascenderem socialmente e pelo prestígio associado ao modo de vida romano.</p>
+                            <ul class="space-y-3">
+                                <li><strong>Transformação Urbana (Civitas):</strong> Substituição dos castros pelo modelo de cidade aberta organizada num <em>fórum</em>. Populações adotaram a toga, banhos nas termas e espetáculos (teatros). A habitação dividia-se entre as ricas <em>domus</em> (com mosaicos e água canalizada) e as <em>insulae</em> (prédios para os mais pobres).</li>
+                                <li><strong>Unificação Linguística e Jurídica:</strong> O latim vulgar sobrepôs-se e unificou a administração, dando origem ao português e castelhano. O <em>Direito Romano</em> substituiu o tribalismo com leis escritas universais para regular a propriedade (<em>ager publicus</em>) e contratos.</li>
+                                <li><strong>Arquitetura Monumental:</strong> Utilização exímia do arco, abóbada e colunas para obras de utilidade como os aquedutos (Segóvia), pontes (Alcântara), arcos do triunfo, esculturas de propaganda (bustos imperiais) e os famosos mosaicos pavimentais.</li>
+                                <li><strong>Transformação Religiosa:</strong> Transição do politeísmo e do culto imperial (cimento cívico romano inicial) para a difusão e eventual oficialização do Cristianismo (a partir de 380 d.C.).</li>
+                                <li><strong>Engenharia e Minas:</strong> Rede de calçadas para rápida difusão e controlo militar. Técnicas espetaculares de extração como a <em>ruina montium</em> (força da água a destruir montanhas) usada intensivamente nas minas de ouro de Las Médulas.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. A Cristianização da Península Ibérica -->
+                <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
+                    <button onclick="toggleAccordion('acc4')" class="w-full px-6 py-4 flex items-center justify-between bg-white hover:bg-stone-50 transition-colors focus:outline-none">
+                        <span class="font-serif font-semibold text-lg text-stone-800 text-left">A Cristianização da Península Ibérica</span>
+                        <i data-lucide="chevron-down" id="icon-acc4" class="w-5 h-5 text-bronze-600 transition-transform duration-300"></i>
+                    </button>
+                    <div id="acc4" class="accordion-content bg-stone-50 px-6 border-t border-stone-100">
+                        <div class="prose prose-sm md:prose-base max-w-none text-stone-700 pb-4">
+                            <p>A expansão do Cristianismo foi um fenómeno contínuo que transformou as bases ideológicas da Hispânia até aos Reinos Germânicos.</p>
+                            <ul class="space-y-3">
+                                <li><strong>Difusão Inicial e Perseguições (Séculos II e III):</strong> A religião espalhou-se por rotas comerciais. O seu atrativo ideológico assentava na igualdade e amor ao próximo, conceitos subversivos na desigual sociedade romana. Foram cruelmente perseguidos pela negação do culto imperial (causando muitos mártires que paradoxalmente deram força à igreja).</li>
+                                <li><strong>Institucionalização (Século IV):</strong> Dois marcos fundamentais: o <em>Édito de Milão (313 d.C.)</em>, pelo imperador Constantino, conferindo liberdade de culto; e o <em>Édito de Tessalónica (380 d.C.)</em>, pelo imperador Teodósio, elevando o cristianismo a religião oficial exclusiva. A Igreja adotou a rede administrativa romana de dioceses e <em>conventus</em>.</li>
+                                <li><strong>A Conversão Germânica (Séc. V e VI):</strong> Com o colapso do império e a invasão bárbara, a Igreja serviu de ponte civilizacional. São Martinho de Dume foi vital para converter os Suevos no norte. Os Visigodos (então Arianos) unificaram social e religiosamente a península com o Rei Recaredo (conversão no III Concílio de Toledo, em 589 d.C.).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. O Exército Romano e a Segurança Comercial -->
+                <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
+                    <button onclick="toggleAccordion('acc5')" class="w-full px-6 py-4 flex items-center justify-between bg-white hover:bg-stone-50 transition-colors focus:outline-none">
+                        <span class="font-serif font-semibold text-lg text-stone-800 text-left">O Exército Romano e a Segurança Comercial</span>
+                        <i data-lucide="chevron-down" id="icon-acc5" class="w-5 h-5 text-bronze-600 transition-transform duration-300"></i>
+                    </button>
+                    <div id="acc5" class="accordion-content bg-stone-50 px-6 border-t border-stone-100">
+                        <div class="prose prose-sm md:prose-base max-w-none text-stone-700 pb-4">
+                            <p>A Hispânia era o "motor económico" e celeiro de Roma (garum, trigo, azeite, ouro). A proteção e escoamento destas riquezas exigiu uma intervenção logística militar.</p>
+                            <ul class="space-y-3">
+                                <li><strong>Vigilância Extrativa:</strong> O exército protegia ativamente as zonas ricas. Um exemplo notável é o destacamento da <em>Legio VII Gemina</em> em Astorga, com a função de supervisionar as extrações e escoltar fortemente os carregamentos do ouro oriundo de Las Médulas para não ser saqueado.</li>
+                                <li><strong>Construção das Veias do Império:</strong> Nos longos períodos de paz, cabia aos legionários construir estradas e pontes robustas que sustentassem o tráfego pesado comercial e das viaturas de carga.</li>
+                                <li><strong>Manutenção da Ordem:</strong> Serviam como força policial contra bandoleiros e rebeldes. Acampamentos militares permanentes estabilizaram as fronteiras, fundando grandes aglomerados populacionais (como a própria cidade de León, a partir de "Legio").</li>
+                                <li><strong>Controlo Marítimo:</strong> A marinha e o exército zelavam pela passagem do Estreito de Gibraltar, prevenindo o avanço da pirataria e controlando o fluxo entre o Mediterrâneo, o Atlântico e a África.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. A Herança do Latim na Identidade Ibérica -->
+                <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
+                    <button onclick="toggleAccordion('acc6')" class="w-full px-6 py-4 flex items-center justify-between bg-white hover:bg-stone-50 transition-colors focus:outline-none">
+                        <span class="font-serif font-semibold text-lg text-stone-800 text-left">A Herança do Latim na Identidade Ibérica</span>
+                        <i data-lucide="chevron-down" id="icon-acc6" class="w-5 h-5 text-bronze-600 transition-transform duration-300"></i>
+                    </button>
+                    <div id="acc6" class="accordion-content bg-stone-50 px-6 border-t border-stone-100">
+                        <div class="prose prose-sm md:prose-base max-w-none text-stone-700 pb-4">
+                            <p>A linguagem e o sistema de registo são o legado imaterial mais persistente que fundou a identidade das nações modernas da Península Ibérica.</p>
+                            <ul class="space-y-3">
+                                <li><strong>Unificação Linguística:</strong> Impulsionado pelo prestígio administrativo, militar e mercantil, o Latim vulgar (popular) substituiu organicamente as antigas línguas paleohispânicas (só restou a raiz do basco). Era a única forma de tribos muito diferentes se compreenderem, tornando-se o unificador oficial.</li>
+                                <li><strong>Origem das Línguas Românicas:</strong> Como era uma versão do povo ("da rua"), evoluiu foneticamente e partiu-se regionalmente no Pós-Império para dar origem diretamente ao Português, ao Castelhano, bem como ao Francês e Italiano na restante Europa. (Exemplo histórico: a cidade de "León" deriva foneticamente da palavra "Legio", com a queda do g-suave).</li>
+                                <li><strong>Adoção pelos Bárbaros:</strong> O Reino Visigodo e Suevo, ao reconhecerem a complexidade e superioridade cultural romana, adotaram o latim na íntegra para administrar as suas leis e Estado (ex: <em>Liber Iudiciorum</em>).</li>
+                                <li><strong>A Numeração Romana:</strong> Mesmo que ineficiente para cálculos matemáticos contemporâneos face aos algarismos árabes, a numeração manteve o seu prestígio cerimonial e clássico sendo usada em rigor para identificar séculos, monarcas e pontífices cristãos.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TAB 3: Flashcards Interativos -->
+        <section id="tab-flashcards" class="tab-content no-print">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-serif font-bold text-stone-800">Quiz Cards de Estudo</h2>
+                <p class="text-stone-600 mt-2">Escolha a opção correta para resolver e virar o cartão de memória.</p>
+            </div>
+            <!-- Grid de Flashcards atualizados via JS -->
+            <div id="flashcards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Os flashcards serão injetados via JS -->
+            </div>
+        </section>
+
+        <!-- TAB 4: AVALIAÇÃO INTERATIVA (QUIZ 25 PERGUNTAS) -->
+        <section id="tab-avaliacao" class="tab-content relative w-full max-w-4xl mx-auto">
+            <!-- VISTA DO QUIZ -->
+            <div id="quiz-interactive-view" class="bg-white rounded-2xl shadow-lg border border-stone-200 overflow-hidden no-print">
+                <div class="bg-stone-50 border-b border-stone-200 p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-serif font-bold text-stone-800 flex items-center gap-2">
+                            <i data-lucide="brain-circuit" class="w-6 h-6 text-bronze-600"></i> Avaliação Temática
+                        </h2>
+                        <div class="bg-white px-4 py-1.5 rounded-full border border-stone-200 text-sm font-medium text-stone-600 shadow-sm">
+                            Pergunta <span id="current-question-indicator" class="text-bronze-600 font-bold">1</span> de 25
+                        </div>
+                    </div>
+                    <!-- Barra de Progresso Contínua -->
+                    <div class="h-2 w-full bg-stone-200 rounded-full overflow-hidden mb-3">
+                        <div id="quiz-progress-bar" class="h-full bg-gradient-to-r from-bronze-400 to-bronze-600 transition-all duration-500 ease-out" style="width: 0%"></div>
+                    </div>
+                    <!-- Indicadores Circulares -->
+                    <div id="quiz-circles" class="flex flex-wrap gap-1.5 justify-center"></div>
+                </div>
+
+                <!-- Corpo da Pergunta -->
+                <div class="p-6 md:p-10 min-h-[400px] flex flex-col justify-between">
+                    <div id="question-container" class="slide-in-right">
+                        <h3 id="question-text" class="text-2xl font-serif font-bold text-stone-900 mb-8 leading-snug">
+                            A carregar pergunta...
+                        </h3>
+                        <div id="options-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                    </div>
+
+                    <!-- Painel de Feedback -->
+                    <div id="feedback-panel" class="hidden mt-8 p-6 rounded-xl border transition-all duration-300">
+                        <div class="flex items-start gap-4">
+                            <div id="feedback-icon" class="p-2 rounded-full mt-1 flex-shrink-0"></div>
+                            <div class="flex-grow">
+                                <h4 id="feedback-title" class="text-lg font-bold mb-2">Título do Feedback</h4>
+                                <p id="feedback-message" class="text-stone-700 font-medium mb-3">Mensagem principal.</p>
+                                <div class="bg-white/60 p-4 rounded-lg border border-black/5 text-sm font-serif">
+                                    <p id="feedback-context" class="text-stone-800 leading-relaxed"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6 flex justify-end">
+                            <button id="next-question-btn" onclick="nextQuestion()" class="flex items-center gap-2 font-medium px-6 py-3 rounded-lg shadow-sm transition-all transform hover:scale-105 active:scale-95">
+                                Próxima Pergunta <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VISTA DO CERTIFICADO (Fim do Quiz) -->
+            <div id="certificate-view" class="hidden relative overflow-hidden bg-white p-8 md:p-12 border-double border-[12px] border-blue-900 rounded-lg shadow-2xl">
+                <div class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+                    <i data-lucide="landmark" class="w-96 h-96"></i>
+                </div>
+                <div class="relative z-10 text-center">
+                    <div class="inline-flex justify-center mb-6 text-blue-800">
+                        <i data-lucide="award" class="w-20 h-20"></i>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-serif font-extrabold uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-blue-900 to-cyan-600 mb-2">
+                        Certificado de Mérito
+                    </h1>
+                    <h2 class="text-xl md:text-2xl font-serif text-stone-600 mb-10 uppercase tracking-wide">A Ocupação Romana da Península Ibérica</h2>
+                    <p class="text-stone-500 mb-2">Conferido a:</p>
+                    <p id="cert-name" class="text-3xl md:text-4xl font-bold text-stone-900 mb-12 underline decoration-bronze-500 underline-offset-8">
+                        Nome do Estudante
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto mb-12">
+                        <div class="bg-blue-50/50 p-6 rounded-xl border border-blue-100 flex flex-col items-center justify-center">
+                            <p class="text-blue-800 font-bold uppercase tracking-wider text-sm mb-2">Desempenho Final</p>
+                            <p class="text-5xl font-black text-blue-900"><span id="cert-score">0</span><span class="text-2xl text-blue-700">/25</span></p>
+                            <p id="cert-percent" class="text-xl font-bold text-blue-600 mt-2">0%</p>
+                        </div>
+                        <div id="cert-badge-box" class="bg-stone-50/50 p-6 rounded-xl border border-stone-200 flex flex-col items-center justify-center">
+                            <div id="cert-badge-icon" class="text-yellow-500 mb-3">
+                                <i data-lucide="medal" class="w-12 h-12"></i>
+                            </div>
+                            <p id="cert-badge-title" class="text-2xl font-serif font-bold mb-2">Sem Classificação</p>
+                            <p id="cert-qualitative-msg" class="text-sm font-medium px-4 text-center"></p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-end border-t-2 border-stone-200 pt-8 max-w-3xl mx-auto mt-12">
+                        <div class="text-left">
+                            <p class="text-xs text-stone-400 font-bold uppercase mb-1">Módulo Interativo</p>
+                            <p class="text-sm text-stone-600 font-serif italic">História de Portugal</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs text-stone-400 font-bold uppercase mb-1">Data de Emissão</p>
+                            <p id="cert-date" class="text-sm text-stone-600 font-serif font-medium"></p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Controlos no Ecrã -->
+                <div class="absolute top-4 right-4 flex gap-3 no-print z-50">
+                    <button onclick="window.print()" class="bg-stone-900 hover:bg-stone-800 text-white p-3 rounded-full shadow-lg transition-colors" title="Imprimir Certificado">
+                        <i data-lucide="printer" class="w-5 h-5"></i>
+                    </button>
+                    <button onclick="resetQuiz()" class="bg-white border border-stone-300 hover:bg-stone-100 text-stone-700 p-3 rounded-full shadow-lg transition-colors" title="Tentar Novamente">
+                        <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modal Nome do Estudante -->
+            <div id="namePromptModal" class="modal fixed inset-0 z-50 items-center justify-center p-4 bg-stone-900/80 backdrop-blur-sm no-print">
+                <div class="bg-white rounded-xl shadow-2xl p-8 w-full max-w-md text-center">
+                    <i data-lucide="graduation-cap" class="w-12 h-12 text-bronze-600 mx-auto mb-4"></i>
+                    <h3 class="text-2xl font-serif font-bold text-stone-900 mb-2">Fim da Avaliação!</h3>
+                    <p class="text-stone-600 mb-6">Para gerar o seu certificado oficial, introduza o seu nome abaixo:</p>
+                    <input type="text" id="finalNameInput" placeholder="O seu nome e apelido..." class="w-full px-4 py-3 border-2 border-stone-200 rounded-lg text-center font-medium focus:border-bronze-500 focus:outline-none mb-6">
+                    <button onclick="generateCertificateFromPrompt()" class="w-full bg-bronze-600 hover:bg-bronze-700 text-white font-bold py-3 rounded-lg transition-colors">
+                        Emitir Certificado
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="bg-stone-900 text-stone-400 py-6 mt-auto no-print">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center text-sm gap-4">
+            <p>Teodósio Faria ©2026 Guia de Estudo da Ocupação Romana da Península Ibérica</p>
+            <div class="flex items-center gap-2">
+                <i data-lucide="graduation-cap" class="w-5 h-5 text-bronze-600"></i>
+                <span class="font-serif">História de Portugal</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAIS DE AJUDA E GALERIA -->
+    <div id="guideModal" class="modal fixed inset-0 z-50 items-center justify-center p-4 bg-stone-900/80 backdrop-blur-sm">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="bg-stone-100 px-6 py-4 border-b flex justify-between items-center">
+                <h3 class="text-xl font-serif font-bold text-stone-800 flex items-center gap-2">
+                    <i data-lucide="help-circle" class="text-bronze-600"></i> Guia do Utilizador
+                </h3>
+                <button onclick="closeModal('guideModal')" class="text-stone-400 hover:text-stone-700 transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto prose prose-stone">
+                <h4>Bem-vindo à aplicação de estudo!</h4>
+                <p>Navegue pelos diferentes separadores para dominar a matéria da Ocupação Romana.</p>
+                <ul>
+                    <li><strong>Estudo & Multimédia:</strong> Leia o contexto histórico e use a galeria visual ou o áudio.</li>
+                    <li><strong>Resumos Temáticos:</strong> Expanda as secções para ler na íntegra os detalhes técnicos compilados das várias fontes.</li>
+                    <li><strong>Cartões de Estudo (Quiz Cards):</strong> Pratique! Tem de conseguir escolher a opção certa para revelar a justificação nas costas do cartão.</li>
+                    <li><strong>Quiz Interativo:</strong> Desafie os seus conhecimentos em 25 perguntas exclusivas, com feedback imediato, e obtenha o seu Certificado de Mérito no final!</li>
+                </ul>
+            </div>
+            <div class="bg-stone-50 px-6 py-4 border-t text-right">
+                <button onclick="closeModal('guideModal')" class="bg-bronze-600 hover:bg-bronze-700 text-white px-5 py-2 rounded-md transition-colors font-medium">Compreendi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Galeria -->
+    <div id="galleryModal" class="modal fixed inset-0 z-50 items-center justify-center p-4 sm:p-8 bg-black/95">
+        <div class="relative w-full h-full max-w-5xl mx-auto flex flex-col items-center justify-center">
+            <div class="absolute top-0 right-0 p-4 z-10 flex gap-4">
+                <span id="galleryCounter" class="text-stone-300 font-mono text-lg bg-black/50 px-3 py-1 rounded-md hidden">1/15</span>
+                <button onclick="closeModal('galleryModal')" class="text-stone-300 hover:text-white bg-black/50 p-2 rounded-full transition-colors">
+                    <i data-lucide="x" class="w-8 h-8"></i>
+                </button>
+            </div>
+            <button id="galleryPrevBtn" onclick="galleryNav(-1)" class="absolute left-0 sm:-left-12 top-1/2 transform -translate-y-1/2 text-stone-400 hover:text-white transition-colors bg-black/30 p-2 rounded-r-xl sm:rounded-full hidden">
+                <i data-lucide="chevron-left" class="w-10 h-10"></i>
+            </button>
+            <img id="galleryImage" src="" alt="Recurso Visual" class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl transition-opacity duration-300">
+            <button id="galleryNextBtn" onclick="galleryNav(1)" class="absolute right-0 sm:-right-12 top-1/2 transform -translate-y-1/2 text-stone-400 hover:text-white transition-colors bg-black/30 p-2 rounded-l-xl sm:rounded-full hidden">
+                <i data-lucide="chevron-right" class="w-10 h-10"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        /* ================= LÓGICA BASE DA APLICAÇÃO ================= */
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            
+            const nameInput = document.getElementById('userNameInput');
+            const savedName = localStorage.getItem('hispaniaromana_user');
+            if (savedName) nameInput.value = savedName;
+            nameInput.addEventListener('blur', (e) => {
+                localStorage.setItem('hispaniaromana_user', e.target.value.trim());
+            });
+
+            renderFlashcards();
+            initQuiz();
+        });
+
+        // Tabs
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('active', 'border-bronze-500', 'text-bronze-400');
+                el.classList.add('border-transparent', 'text-stone-400');
+            });
+            document.getElementById('tab-' + tabId).classList.add('active');
+            const btn = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+            if(btn) {
+                btn.classList.remove('border-transparent', 'text-stone-400');
+                btn.classList.add('active', 'border-bronze-500', 'text-bronze-400');
+            }
+        }
+
+        // Acordeão
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            if (content.classList.contains('open')) {
+                content.classList.remove('open');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                document.querySelectorAll('.accordion-content').forEach(el => el.classList.remove('open'));
+                document.querySelectorAll('[id^="icon-acc"]').forEach(el => el.style.transform = 'rotate(0deg)');
+                content.classList.add('open');
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // Modais e Galeria
+        function openModal(id) { document.getElementById(id).classList.add('show'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+        
+        let currentGalleryType = '';
+        let currentSlideIndex = 1;
+        let totalSlides = 1;
+
+        function openGallery(type, count) {
+            currentGalleryType = type; totalSlides = count; currentSlideIndex = 1;
+            updateGalleryImage();
+            
+            const pBtn = document.getElementById('galleryPrevBtn');
+            const nBtn = document.getElementById('galleryNextBtn');
+            const ctr = document.getElementById('galleryCounter');
+            
+            if (count > 1) { pBtn.classList.remove('hidden'); nBtn.classList.remove('hidden'); ctr.classList.remove('hidden'); } 
+            else { pBtn.classList.add('hidden'); nBtn.classList.add('hidden'); ctr.classList.add('hidden'); }
+            openModal('galleryModal');
+        }
+
+        function galleryNav(dir) {
+            currentSlideIndex += dir;
+            if (currentSlideIndex > totalSlides) currentSlideIndex = 1;
+            if (currentSlideIndex < 1) currentSlideIndex = totalSlides;
+            updateGalleryImage();
+        }
+
+        function updateGalleryImage() {
+            const img = document.getElementById('galleryImage');
+            img.style.opacity = '0';
+            let src = currentGalleryType === 'infografia' ? './infografia.jpg' : `./Diapositivo${currentSlideIndex}.jpg`;
+            setTimeout(() => { img.src = src; img.onload = () => img.style.opacity = '1'; }, 150);
+            document.getElementById('galleryCounter').innerText = `${currentSlideIndex}/${totalSlides}`;
+        }
+
+        // Confetti Engine
+        function fireConfetti() {
+            const colors = ['#10b981', '#059669', '#3b82f6', '#f59e0b', '#fcd34d'];
+            for(let i=0; i<40; i++) {
+                const conf = document.createElement('div');
+                conf.className = 'confetti rounded-sm';
+                conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                conf.style.left = Math.random() * 100 + 'vw';
+                conf.style.top = '-10px';
+                conf.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                conf.style.animationDelay = (Math.random() * 0.5) + 's';
+                document.body.appendChild(conf);
+                setTimeout(() => conf.remove(), 4000);
+            }
+        }
+
+
+        /* ================= QUIZ CARDS (DADOS DO CSV INJETADOS E FORMATADOS) ================= */
+        const flashcardsData = [
+            { q: "Em que ano e local teve início o desembarque romano na Península Ibérica?", opts: ["Em 218 a.C., em Empúries (Ampurias)", "Em 139 a.C., em Numância", "Em 19 a.C., em Tarragona"], c: 0, e: "Em 218 a.C., na localidade de Empúries (Ampurias)." },
+            { q: "Qual foi o principal imperativo estratégico que motivou a entrada de Roma na Hispânia?", opts: ["Expandir a religião católica", "A Segunda Guerra Púnica (cortar abastecimentos a Cartago)", "Capturar escravos para o Coliseu"], c: 1, e: "A Segunda Guerra Púnica, visando neutralizar as linhas de abastecimento de Aníbal e de Cartago." },
+            { q: "Em que batalha, ocorrida em 206 a.C., foi definitivamente quebrado o poder cartaginês na Península Ibérica?", opts: ["Batalha de Ilipa", "Batalha de Aljubarrota", "Batalha do Guadalquivir"], c: 0, e: "Batalha de Ilipa." },
+            { q: "A conquista romana da Península Ibérica estendeu-se de 218 a.C. até ao ano de _____.", opts: ["476 d.C.", "139 a.C.", "19 a.C."], c: 2, e: "19 a.C." },
+            { q: "Quem foi o líder lusitano que utilizou táticas de guerrilha para resistir à expansão romana entre 147 e 139 a.C.?", opts: ["Sertório", "Viriato", "Cipião Emiliano"], c: 1, e: "Viriato." },
+            { q: "Como terminou o conflito entre Roma e os lusitanos sob o comando de Viriato em 139 a.C.?", opts: ["Com o assassinato de Viriato por oficiais subornados", "Com a vitória de Viriato e a expulsão dos Romanos", "Com um tratado de paz pacífico duradouro"], c: 0, e: "Com o assassinato de Viriato pelos seus próprios oficiais subornados pelo procónsul Cepião." },
+            { q: "Qual cidade celtibera se tornou o símbolo da resistência no centro da meseta, caindo após um cerco de 15 meses?", opts: ["Conímbriga", "Numância", "Mérida"], c: 1, e: "Numância." },
+            { q: "Quem foi o general romano responsável pela destruição final de Numância em 133 a.C.?", opts: ["Júlio César", "Marco Agripa", "Cipião Emiliano"], c: 2, e: "Cipião Emiliano." },
+            { q: "As Guerras Cântabras (29-19 a.C.) foram motivadas pela necessidade de Roma controlar que recursos?", opts: ["Ricas reservas de ouro e minerais", "Produção abundante de azeite e vinho", "Rotas marítimas para a Britânia"], c: 0, e: "As ricas reservas de ouro e minerais das Astúrias e da Cantábria." },
+            { q: "Qual era a principal riqueza mineral extraída na região de Sierra Morena?", opts: ["Ouro", "Prata", "Cobre"], c: 1, e: "Prata." },
+            { q: "Que figura histórica romana se estabeleceu em Tarragona durante as Guerras Cântabras?", opts: ["Augusto", "Júlio César", "Trajano"], c: 0, e: "Augusto." },
+            { q: "O termo 'bárbaro' era utilizado pelos romanos para designar que povos?", opts: ["Guerreiros de elite das legiões", "Povos além-fronteiras que não falavam latim", "Apenas as tribos que viviam no Norte de África"], c: 1, e: "Povos que viviam fora das fronteiras do império e não falavam latim." },
+            { q: "Qual era o livro sagrado que registava os princípios do cristianismo difundidos pelos apóstolos?", opts: ["Bíblia", "Alcorão", "Tora"], c: 0, e: "Bíblia." },
+            { q: "A 'numeração romana' ainda é utilizada hoje em dia principalmente para identificar o quê?", opts: ["Dias da semana", "Anos civis", "Séculos"], c: 2, e: "Séculos." },
+            { q: "Que santo foi essencial para a conversão dos suevos ao cristianismo no século VI?", opts: ["São Martinho de Dume", "São João", "São Pedro"], c: 0, e: "São Martinho de Dume." },
+            { q: "O termo 'Hispania' foi utilizado por Roma para designar a totalidade de que região geográfica?", opts: ["Península Itálica", "Península Ibérica", "Norte de África"], c: 1, e: "Península Ibérica." },
+            { q: "Qual era a principal característica económica dos lusitanos antes da integração romana?", opts: ["Agricultura de subsistência, gado, caça e pesca", "Comércio marítimo internacional", "Extração intensiva de minério em grande escala"], c: 0, e: "Agricultura de subsistência, criação de gado, caça e pesca." },
+            { q: "Os visigodos foram conhecidos pela sua excelente perícia em que arte decorativa?", opts: ["Ourivesaria (ouro e pedras preciosas)", "Tapeçaria de seda", "Mosaicos de vidro"], c: 0, e: "Ourivesaria (trabalho em ouro e pedras preciosas)." },
+            { q: "Que elemento arquitetónico é característico da arte visigótica na Península Ibérica?", opts: ["Abóbada de berço", "Arco ogival", "Arco em ferradura"], c: 2, e: "Arco em ferradura." },
+            { q: "Qual era a função dos 'circos' na arquitetura monumental romana?", opts: ["Corridas de carros de guerra (quadrigas)", "Lutas exclusivas de gladiadores", "Banhos públicos e termas"], c: 0, e: "Espaços para corridas de carros de guerra (quadrigas)." },
+            { q: "A cidade de _____ (Pax Julia) era um dos centros administrativos romanos no sul do atual território português.", opts: ["Braga", "Évora", "Beja"], c: 2, e: "Beja." }
+        ];
+
+        function renderFlashcards() {
+            const cont = document.getElementById('flashcards-container');
+            cont.innerHTML = flashcardsData.map((card, i) => `
+                <div class="flashcard perspective-1000 w-full min-h-[300px] cursor-default" id="fc-${i}">
+                    <div class="flashcard-inner relative w-full h-full text-center shadow-md rounded-xl border border-stone-200">
+                        <!-- Parte Frontal -->
+                        <div class="absolute w-full h-full bg-white rounded-xl backface-hidden p-5 md:p-6 flex flex-col justify-between">
+                            <h4 class="font-serif font-bold text-base md:text-lg text-stone-800 line-clamp-3">${card.q}</h4>
+                            <div class="space-y-2 mt-4">
+                                ${card.opts.map((opt, oIdx) => `
+                                    <button onclick="flipCard(${i}, ${oIdx})" class="fc-btn-${i} w-full py-2 px-2 text-xs md:text-sm font-medium bg-stone-100 border border-stone-300 rounded hover:bg-stone-200 transition-colors truncate" title="${opt}">
+                                        ${opt}
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <!-- Parte Traseira -->
+                        <div class="absolute w-full h-full bg-bronze-900 text-stone-50 rounded-xl backface-hidden rotate-y-180 p-5 md:p-6 flex flex-col items-center justify-center overflow-y-auto">
+                            <i data-lucide="check-circle" class="w-8 h-8 text-bronze-400 mb-3 flex-shrink-0"></i>
+                            <p class="text-sm md:text-base leading-relaxed font-serif text-center">${card.e}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons(); // Reactiva ícones injetados
+        }
+
+        function flipCard(cIdx, oIdx) {
+            const card = flashcardsData[cIdx];
+            const btn = document.querySelectorAll(`.fc-btn-${cIdx}`)[oIdx];
+            if (oIdx === card.c) {
+                document.getElementById(`fc-${cIdx}`).classList.add('flipped');
+            } else {
+                btn.classList.add('bg-red-100', 'text-red-800', 'border-red-300');
+                setTimeout(() => btn.classList.remove('bg-red-100', 'text-red-800', 'border-red-300'), 800);
+            }
+        }
+
+        /* ================= QUIZ INTERATIVO (25 PERGUNTAS) ================= */
+        const quizData = [
+            {
+                q: "O envolvimento inicial de Roma na Península Ibérica ocorreu no contexto de que conflito internacional?",
+                opts: ["Guerra Civil de Sula", "Segunda Guerra Púnica", "Guerras Gálicas", "Guerras Macedónicas"],
+                correct: 1,
+                hint: "Pense no confronto contra a potência norte-africana (Cartago).",
+                exp: "A conquista iniciou-se em 218 a.C., desembarcando em Empúries para cortar as linhas de abastecimento do general cartaginês Aníbal."
+            },
+            {
+                q: "Qual foi a principal tática militar utilizada pelos lusitanos sob a liderança de Viriato?",
+                opts: ["Formação em falange", "Combate naval", "Cerco sistemático", "Guerra de guerrilha"],
+                correct: 3,
+                hint: "Eles aproveitavam o terreno acidentado para ataques rápidos e surpresa.",
+                exp: "Evitando batalhas em campo aberto contra as disciplinadas legiões, os Lusitanos usaram o conhecimento das montanhas para desferir emboscadas mortais."
+            },
+            {
+                q: "Como terminou formalmente a resistência de Viriato contra o domínio romano?",
+                opts: ["Através de suicídio coletivo", "Pelo seu assassinato por oficiais subornados", "Num duelo contra Galba", "Rendição incondicional"],
+                correct: 1,
+                hint: "A frase histórica 'Roma não paga a traidores' está ligada a este evento.",
+                exp: "Incapaz de vencê-lo em combate, o procônsul Cepião subornou os aliados de Viriato (Audax, Ditalco e Minuro) que o mataram enquanto dormia em 139 a.C."
+            },
+            {
+                q: "O cerco de Numância, liderado por Cipião Emiliano (133 a.C.), utilizou que método para forçar a rendição?",
+                opts: ["Circunvalação e fome", "Uso de elefantes", "Infiltração de espiões", "Ataque naval"],
+                correct: 0,
+                hint: "Tratou-se de um isolamento físico total da cidade.",
+                exp: "O exército romano construiu fortificações ao redor de Numância, cortando qualquer acesso, o que resultou na rendição pela fome extrema e desespero."
+            },
+            {
+                q: "Qual foi o principal objetivo económico que motivou a 3.ª Fase da Conquista (Guerras Cântabras)?",
+                opts: ["Pesca no Atlântico", "Controlo das minas de ouro e prata no noroeste", "Captura de cavalos", "Exportação de azeite asturiano"],
+                correct: 1,
+                hint: "Augusto viajou pessoalmente para assegurar a riqueza mineral dessa região montanhosa.",
+                exp: "Roma precisava imperativamente de consolidar o domínio no noroeste para garantir a exploração intensiva de minas ricas, como as de Las Médulas."
+            },
+            {
+                q: "O 'Latim Vulgar' introduzido na Península diferia do latim clássico porque era...",
+                opts: ["Exclusivo da religião", "A língua popular, da rua, exército e comércio", "Falado apenas por magistrados", "Uma língua morta"],
+                correct: 1,
+                hint: "Foi a base que, ao sofrer evoluções orgânicas diárias, deu origem ao Português e ao Espanhol.",
+                exp: "Sendo a língua administrativa e do quotidiano mercantil, o latim vulgar sobrepôs-se organicamente às línguas indígenas devido ao seu prestígio utilitário."
+            },
+            {
+                q: "Na arquitetura urbana romana (civitas), as famílias mais pobres habitavam em prédios de vários andares conhecidos como:",
+                opts: ["Domus", "Castros", "Insulae", "Fóruns"],
+                correct: 2,
+                hint: "Eram construções geralmente em madeira, vulneráveis a incêndios e muitas vezes sem água canalizada.",
+                exp: "Ao contrário das abastadas 'domus' térreas, as 'insulae' eram blocos habitacionais densos para a plebe urbana das cidades."
+            },
+            {
+                q: "Em 313 d.C., o Édito de Milão revolucionou o Império Romano ao...",
+                opts: ["Declarar o Politeísmo obrigatório", "Fundar a cidade de Constantinopla", "Conceder a liberdade de culto aos cristãos", "Tornar o Cristianismo na única religião permitida"],
+                correct: 2,
+                hint: "Este documento foi promulgado pelo Imperador Constantino para acabar com as perseguições.",
+                exp: "O Édito de Milão instituiu a tolerância religiosa. Apenas mais tarde (380 d.C., Teodósio) é que se tornaria a religião oficial exclusiva."
+            },
+            {
+                q: "Qual era a função de infraestruturas públicas grandiosas, como os anfiteatros e fóruns, além do uso prático?",
+                opts: ["Refúgio em inundações", "Cimento ideológico e propaganda de poder", "Esconderijos de ouro", "Locais de enterro secretos"],
+                correct: 1,
+                hint: "As cidades eram ferramentas projetadas para impressionar e subjugar mentalmente os povos conquistados.",
+                exp: "A monumentalidade exibia a superioridade civilizacional de Roma, incentivando as elites indígenas a adotar o modo de vida romano pelo prestígio."
+            },
+            {
+                q: "Qual foi o famoso produto da indústria de salga piscícola hispânica largamente exportado?",
+                opts: ["Garum", "Trigo de sequeiro", "Vinho tinto", "Azeite andaluz"],
+                correct: 0,
+                hint: "Era uma pasta ou molho de peixe fermentado altamente valorizado na culinária romana.",
+                exp: "O Garum era essencial na dieta e no comércio imperial, e a extensa costa ibérica proporcionou condições ideais para esta indústria."
+            },
+            {
+                q: "As legiões romanas na Hispânia, em períodos de paz, garantiam a segurança e dedicavam-se frequentemente a:",
+                opts: ["Pintar frescos em grutas", "Aprender línguas indígenas", "Construir e manter calçadas e pontes", "Governar o senado em Roma"],
+                correct: 2,
+                hint: "As 'veias do império' necessitavam de manutenção para o tráfego pesado das mercadorias.",
+                exp: "Para além de escoltar caravanas com ouro, o exército funcionava como uma formidável força de engenharia, edificando a complexa rede rodoviária militar e comercial."
+            },
+            {
+                q: "Que líder ou grupo bárbaro unificou territorialmente a Península no século VI?",
+                opts: ["Átila, o Huno", "Os Suevos em Braga", "Os Celtiberos de Numância", "Os Visigodos em 585"],
+                correct: 3,
+                hint: "Conquistaram e absorveram o reino vizinho no noroeste da península.",
+                exp: "Em 585, os Visigodos (com capital em Toledo) derrotaram definitivamente o Reino Suevo, passando a deter o controlo quase integral da Ibéria."
+            },
+            {
+                q: "Que evento cimentou a fusão das aristocracias visigoda e hispano-romana em 589 d.C.?",
+                opts: ["A introdução da moeda visigótica", "A conversão do Rei Recaredo ao Catolicismo", "A expulsão dos Romanos", "A reconstrução de Roma"],
+                correct: 1,
+                hint: "Este ato eliminou a barreira religiosa entre os povos (arianos vs católicos).",
+                exp: "No III Concílio de Toledo, Recaredo abandonou o Arianismo. A religião comum tornou-se o cimento ideológico que permitiu casamentos mistos e leis unificadas."
+            },
+            {
+                q: "Na economia agrária romana, a exploração estatal ou cedida a cidadãos designava-se juridicamente por:",
+                opts: ["Ager Publicus", "Insulae Ruralis", "Mare Nostrum", "Senatus Consultum"],
+                correct: 0,
+                hint: "Literalmente traduzido por 'Terras Públicas'.",
+                exp: "As terras conquistadas revertiam para o Estado (Ager Publicus), que posteriormente geria concessões a veteranos e colonos em troca de rendas."
+            },
+            {
+                q: "Qual foi a religião que, embora sofrendo duras perseguições iniciais, serviu de ponte para a Idade Média?",
+                opts: ["Culto do Imperador", "Mitraísmo", "Arianismo", "Cristianismo"],
+                correct: 3,
+                hint: "A sua rede de bispos e dioceses sobreviveu ao colapso político de Roma.",
+                exp: "A Igreja Católica preservou a estrutura administrativa, a língua latina e a ética romana, fazendo a ligação cultural com os invasores germânicos."
+            },
+            {
+                q: "A técnica 'Ruina Montium' alterou drasticamente a paisagem da região de:",
+                opts: ["Algarve", "Las Médulas (Noroeste)", "Vale do Guadalquivir", "Cartago Nova"],
+                correct: 1,
+                hint: "Era uma mina de ouro a céu aberto que parece hoje um vale de montanhas esventradas.",
+                exp: "Em Las Médulas (Leão), a força da água canalizada provocava desmoronamentos artificiais, permitindo aos Romanos lavar e filtrar os detritos em busca de ouro."
+            },
+            {
+                q: "O 'culto imperial' e as estátuas espalhadas nos fóruns serviam primariamente para:",
+                opts: ["Decoração artística neutra", "Assinalar locais de venda", "Garantir a lealdade política a Roma", "Avisar da presença de bárbaros"],
+                correct: 2,
+                hint: "Tornava o Imperador numa entidade divina ou semidivina que unificava povos díspares.",
+                exp: "O Aedes Augusti e as inscrições epigráficas nas cidades eram poderosas ferramentas de obediência e integração das elites no projeto político romano."
+            },
+            {
+                q: "Qual dos seguintes elementos de engenharia hidráulica garantia o estatuto 'civilizado' e as termas das cidades?",
+                opts: ["Circos", "Miliários", "Domus", "Aquedutos"],
+                correct: 3,
+                hint: "Traziam água limpa de nascentes distantes a grandes alturas.",
+                exp: "A água corrente contínua proporcionada pelos aquedutos (como em Segóvia ou Conímbriga) era o símbolo máximo da sofisticação higiénica e social romana."
+            },
+            {
+                q: "Que tribo ibérica pré-romana habitava castros montanhosos e subsistia de pastorícia antes da chegada das legiões?",
+                opts: ["Etruscos", "Visigodos", "Cartagineses", "Lusitanos"],
+                correct: 3,
+                hint: "Esta foi a tribo central da resistência na vertente atlântica e centro-oeste.",
+                exp: "Os Lusitanos, antes de absorverem as dinâmicas romanas de comércio monetário, tinham raízes profundas na criação de gado, forrageamento e razias."
+            },
+            {
+                q: "Segundo as fontes, que imperador promulgou o Cristianismo como religião *única e oficial* do Império?",
+                opts: ["Constantino (Édito de Milão)", "Júlio César", "Augusto", "Teodósio (Édito de Tessalónica)"],
+                correct: 3,
+                hint: "Aconteceu num período mais tardio (380 d.C.) da decadência imperial.",
+                exp: "Foi o Imperador Teodósio I que proibiu ativamente os cultos pagãos antigos e tornou o Catolicismo na espinha dorsal espiritual do Estado."
+            },
+            {
+                q: "A concessão universal da Cidadania Romana a homens livres, estendida em 212 d.C., permitia legalmente:",
+                opts: ["Derrubar o império livremente", "Evitar todos os impostos", "Igualar as leis de propriedade e contratos", "Viajar para a Ásia Menor"],
+                correct: 2,
+                hint: "Removeu a velha segregação legal entre conquistadores itálicos e povos conquistados locais.",
+                exp: "A cidadania romana (Édito de Caracalla) universalizou o Direito Romano para contratos, proteção da propriedade e acesso a estatuto social idêntico."
+            },
+            {
+                q: "O marco arquitetónico visigótico que se destacou artisticamente na Hispânia baseava-se muito no uso do:",
+                opts: ["Tijolo exposto bruto", "Arco em ferradura e rica ourivesaria", "Mosaico abstrato gigante", "Construção de aquedutos"],
+                correct: 1,
+                hint: "Pense na Ermida de Santa Maria de Quintanilha e nas pedras preciosas encastradas no ouro.",
+                exp: "Os Visigodos herdaram muitas formas romanas mas introduziram os seus próprios capitéis estilizados, arcos em ferradura e notável joalharia em ouro."
+            },
+            {
+                q: "Porque se refere muitas vezes a Hispânia como o 'celeiro' de Roma?",
+                opts: ["Pelas vastas florestas densas", "Porque os gladiadores lá nasciam", "Pela fortíssima produção cerealífera e agrícola exportável", "Porque era lá que guardavam o tesouro"],
+                correct: 2,
+                hint: "Os vales do Guadalquivir garantiam o sustento alimentar da populosa capital itálica.",
+                exp: "O clima e o desenvolvimento agrário tornaram a Península Ibérica vital para nutrir a enorme população urbana da cidade de Roma."
+            },
+            {
+                q: "Na datação do tempo histórico, a que século pertence a data da fundação de Roma (753 a.C.)?",
+                opts: ["Século VII a.C.", "Século VIII a.C.", "Século IX a.C.", "Século VI a.C."],
+                correct: 1,
+                hint: "A regra de cálculo: pegar nas centenas (7) e, como os últimos dígitos (53) não são zeros, somar +1.",
+                exp: "7 + 1 = 8. Logo, pertence ao Século VIII a.C."
+            },
+            {
+                q: "Que notável monge impulsionou fortemente a conversão do Reino dos Suevos ao catolicismo no noroeste peninsular?",
+                opts: ["São João", "São Frutuoso", "São Pedro de Balsemão", "São Martinho de Dume"],
+                correct: 3,
+                hint: "Fundou a basílica perto de Braga e trabalhou no séc. VI.",
+                exp: "Martinho de Dume foi um líder eclesiástico basilar que ajudou na diplomacia e evangelização das tropas suevas que haviam ocupado aquela região."
+            }
+        ];
+
+        let currentQIndex = 0;
+        let score = 0;
+        let userAnswers = new Array(quizData.length).fill(null);
+
+        function initQuiz() {
+            const circlesContainer = document.getElementById('quiz-circles');
+            circlesContainer.innerHTML = '';
+            for (let i = 0; i < quizData.length; i++) {
+                const circle = document.createElement('div');
+                circle.id = `circle-${i}`;
+                circle.className = `w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-stone-300 transition-colors duration-300 ${i === 0 ? 'ring-2 ring-bronze-500 ring-offset-1' : ''}`;
+                circlesContainer.appendChild(circle);
+            }
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const q = quizData[currentQIndex];
+            
+            document.getElementById('current-question-indicator').innerText = currentQIndex + 1;
+            const progressPct = ((currentQIndex) / quizData.length) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${progressPct}%`;
+
+            document.querySelectorAll('#quiz-circles div').forEach((el, idx) => {
+                if(userAnswers[idx] === null) el.className = `w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-stone-300 transition-colors duration-300 ${idx === currentQIndex ? 'ring-2 ring-bronze-500 ring-offset-1' : ''}`;
+            });
+
+            const qContainer = document.getElementById('question-container');
+            qContainer.classList.remove('slide-in-right');
+            void qContainer.offsetWidth; // trigger reflow
+            qContainer.classList.add('slide-in-right');
+
+            document.getElementById('question-text').innerText = q.q;
+
+            const grid = document.getElementById('options-grid');
+            grid.innerHTML = '';
+            q.opts.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn w-full p-4 md:p-6 text-left border-2 border-stone-200 rounded-xl bg-white hover:border-bronze-400 hover:bg-stone-50 font-medium text-stone-800 transition-all transform active:scale-95 shadow-sm`;
+                btn.innerHTML = `
+                    <div class="flex items-center gap-3 pointer-events-none">
+                        <div class="w-8 h-8 rounded-full border border-stone-300 flex items-center justify-center font-bold text-stone-500 flex-shrink-0 option-letter">
+                            ${String.fromCharCode(65 + idx)}
+                        </div>
+                        <span class="leading-snug">${opt}</span>
+                    </div>
+                `;
+                btn.onclick = () => selectOption(idx);
+                grid.appendChild(btn);
+            });
+
+            document.getElementById('feedback-panel').classList.add('hidden');
+        }
+
+        function selectOption(selectedIndex) {
+            const btns = document.querySelectorAll('.option-btn');
+            btns.forEach(btn => {
+                btn.onclick = null;
+                btn.classList.remove('hover:border-bronze-400', 'hover:bg-stone-50', 'active:scale-95');
+                btn.classList.add('opacity-60', 'cursor-not-allowed');
+            });
+
+            const q = quizData[currentQIndex];
+            const isCorrect = (selectedIndex === q.correct);
+            userAnswers[currentQIndex] = isCorrect;
+            
+            const selectedBtn = btns[selectedIndex];
+            selectedBtn.classList.remove('opacity-60');
+            
+            const panel = document.getElementById('feedback-panel');
+            const fTitle = document.getElementById('feedback-title');
+            const fMsg = document.getElementById('feedback-message');
+            const fContext = document.getElementById('feedback-context');
+            const fIcon = document.getElementById('feedback-icon');
+            const circle = document.getElementById(`circle-${currentQIndex}`);
+
+            if (isCorrect) {
+                score++;
+                selectedBtn.classList.add('border-green-500', 'bg-green-50', 'ring-2', 'ring-green-200');
+                selectedBtn.querySelector('.option-letter').classList.add('bg-green-500', 'text-white', 'border-transparent');
+                
+                panel.className = "mt-8 p-6 rounded-xl border border-green-200 bg-green-50 slide-in-right";
+                fTitle.className = "text-lg font-bold mb-2 text-green-800";
+                fTitle.innerText = "Excelente! Resposta Correta.";
+                fMsg.innerText = "Bom domínio da matéria apresentada.";
+                fIcon.className = "p-2 rounded-full mt-1 flex-shrink-0 bg-green-200 text-green-700";
+                fIcon.innerHTML = `<i data-lucide="check" class="w-6 h-6"></i>`;
+                
+                circle.classList.remove('bg-stone-300', 'ring-2', 'ring-bronze-500');
+                circle.classList.add('bg-green-500');
+                
+                fireConfetti();
+            } else {
+                selectedBtn.classList.add('border-red-500', 'bg-red-50');
+                selectedBtn.querySelector('.option-letter').classList.add('bg-red-500', 'text-white', 'border-transparent');
+                
+                const correctBtn = btns[q.correct];
+                correctBtn.classList.remove('opacity-60');
+                correctBtn.classList.add('border-green-400', 'border-dashed');
+                
+                panel.className = "mt-8 p-6 rounded-xl border border-red-200 bg-red-50 slide-in-right";
+                fTitle.className = "text-lg font-bold mb-2 text-red-800";
+                fTitle.innerText = "Incorreto. Vamos compreender o erro.";
+                fMsg.innerText = `A opção certa era a ${String.fromCharCode(65 + q.correct)}. ${q.hint}`;
+                fIcon.className = "p-2 rounded-full mt-1 flex-shrink-0 bg-red-200 text-red-700";
+                fIcon.innerHTML = `<i data-lucide="x" class="w-6 h-6"></i>`;
+                
+                circle.classList.remove('bg-stone-300', 'ring-2', 'ring-bronze-500');
+                circle.classList.add('bg-red-500');
+            }
+
+            fContext.innerHTML = `<strong>Aprofundamento Histórico:</strong> ${q.exp}`;
+            
+            const nextBtn = document.getElementById('next-question-btn');
+            if (currentQIndex === quizData.length - 1) {
+                nextBtn.innerHTML = `Finalizar Exercício <i data-lucide="flag" class="w-5 h-5"></i>`;
+                nextBtn.className = "flex items-center gap-2 font-bold px-8 py-3 rounded-lg shadow-md transition-all text-white bg-bronze-600 hover:bg-bronze-700 transform hover:scale-105";
+            } else {
+                nextBtn.innerHTML = `Próxima Pergunta <i data-lucide="arrow-right" class="w-5 h-5"></i>`;
+                nextBtn.className = "flex items-center gap-2 font-medium px-6 py-3 rounded-lg shadow-sm transition-all transform hover:scale-105 active:scale-95 bg-white border border-stone-300 text-stone-700 hover:bg-stone-100";
+            }
+            
+            panel.classList.remove('hidden');
+            lucide.createIcons();
+            
+            if(window.innerWidth < 768) {
+                panel.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQIndex < quizData.length - 1) {
+                currentQIndex++;
+                renderQuestion();
+                document.getElementById('quiz-interactive-view').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                processConclusion();
+            }
+        }
+
+        /* ================= CERTIFICADO E CONCLUSÃO ================= */
+        function processConclusion() {
+            document.getElementById('quiz-progress-bar').style.width = `100%`;
+            const finalName = document.getElementById('userNameInput').value.trim();
+            
+            if (finalName === '') {
+                openModal('namePromptModal');
+            } else {
+                generateCertificate(finalName);
+            }
+        }
+
+        function generateCertificateFromPrompt() {
+            const inputName = document.getElementById('finalNameInput').value.trim();
+            if(inputName === '') {
+                document.getElementById('finalNameInput').classList.add('ring-2', 'ring-red-500');
+                return;
+            }
+            document.getElementById('userNameInput').value = inputName;
+            localStorage.setItem('hispaniaromana_user', inputName);
+            closeModal('namePromptModal');
+            generateCertificate(inputName);
+        }
+
+        function generateCertificate(studentName) {
+            document.getElementById('quiz-interactive-view').classList.add('hidden');
+            const certView = document.getElementById('certificate-view');
+            certView.classList.remove('hidden');
+            certView.classList.add('slide-in-right');
+
+            const total = quizData.length;
+            const pct = Math.round((score / total) * 100);
+
+            document.getElementById('cert-name').innerText = studentName;
+            document.getElementById('cert-score').innerText = score;
+            document.getElementById('cert-percent').innerText = `${pct}%`;
+            
+            const dateStr = new Date().toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
+            document.getElementById('cert-date').innerText = dateStr;
+
+            let badgeTitle = "Explorador";
+            let qualMsg = "Continue a Aprender! A história romana requer persistência.";
+            let iconColor = "text-red-500";
+            let bgColor = "bg-red-50 border-red-200";
+
+            if (pct === 100) {
+                badgeTitle = "Historiador";
+                qualMsg = "Excecional! Concluiu com 100% de perfeição.";
+                iconColor = "text-yellow-500";
+                bgColor = "bg-green-50 border-green-200";
+            } else if (pct >= 90) {
+                badgeTitle = "Cronista";
+                qualMsg = "Excelente Desempenho! Quase perfeito na análise.";
+                iconColor = "text-emerald-500";
+                bgColor = "bg-green-50 border-green-200";
+            } else if (pct >= 70) {
+                badgeTitle = "Revolucionário";
+                qualMsg = "Muito Bom Trabalho! Sólido conhecimento do Império.";
+                iconColor = "text-blue-500";
+                bgColor = "bg-blue-50 border-blue-200";
+            } else if (pct >= 50) {
+                badgeTitle = "Explorador";
+                qualMsg = "Bom Esforço! A sua jornada na Ibéria começou.";
+                iconColor = "text-amber-500";
+                bgColor = "bg-yellow-50 border-yellow-200";
+            }
+
+            document.getElementById('cert-badge-title').innerText = badgeTitle;
+            document.getElementById('cert-qualitative-msg').innerText = qualMsg;
+            document.getElementById('cert-badge-box').className = `p-6 rounded-xl border flex flex-col items-center justify-center ${bgColor}`;
+            document.getElementById('cert-badge-icon').className = `${iconColor} mb-3`;
+            
+            if(pct >= 50) fireConfetti();
+            
+            document.getElementById('tab-avaliacao').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function resetQuiz() {
+            currentQIndex = 0;
+            score = 0;
+            userAnswers = new Array(quizData.length).fill(null);
+            
+            document.getElementById('certificate-view').classList.add('hidden');
+            document.getElementById('quiz-interactive-view').classList.remove('hidden');
+            
+            initQuiz();
+            document.getElementById('tab-avaliacao').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    </script>
+</body>
+</html>
