@@ -190,6 +190,9 @@
                 <button onclick="switchTab('resumos')" class="tab-btn px-4 py-3 text-sm font-medium border-b-2 border-transparent text-stone-400 hover:text-stone-200 flex items-center gap-2 whitespace-nowrap transition-colors" data-tab="resumos">
                     <i data-lucide="layers" class="w-4 h-4"></i> Resumos Temáticos
                 </button>
+                <button onclick="switchTab('laboratorio')" class="tab-btn px-4 py-3 text-sm font-medium border-b-2 border-transparent text-stone-400 hover:text-stone-200 flex items-center gap-2 whitespace-nowrap transition-colors" data-tab="laboratorio">
+                    <i data-lucide="flask-conical" class="w-4 h-4"></i> Lab. Cronológico
+                </button>
                 <button onclick="switchTab('flashcards')" class="tab-btn px-4 py-3 text-sm font-medium border-b-2 border-transparent text-stone-400 hover:text-stone-200 flex items-center gap-2 whitespace-nowrap transition-colors" data-tab="flashcards">
                     <i data-lucide="credit-card" class="w-4 h-4"></i> Quiz Cards
                 </button>
@@ -217,7 +220,7 @@
 
                         <h3 class="text-2xl font-serif text-stone-800 mt-8">A Romanização</h3>
                         <p>Influência exercida pelos Romanos sobre os territórios e povos conquistados.</p>
-
+                        
                         <h3 class="text-2xl font-serif text-stone-800 mt-8">A Feroz Resistência Indígena</h3>
                         <p>O avanço romano enfrentou uma oposição tenaz, destacando-se a resistência dos Lusitanos. Liderados por <strong>Viriato</strong>, um brilhante estratega que sobreviveu ao massacre do pretor Galba, os Lusitanos recorreram a táticas de guerrilha e emboscadas. Conhecedores das regiões montanhosas, infligiram severas e humilhantes derrotas às legiões romanas. A incapacidade militar de Roma forçou-a a recorrer à traição, subornando aliados de Viriato para o assassinarem enquanto dormia em 139 a.C., precipitando a queda lusitana.</p>
 
@@ -437,7 +440,128 @@
                         </div>
                     </div>
                 </div>
+            
+            </div>
+        </section>
 
+        <!-- TAB NOVO: LABORATÓRIO VISUAL DA LINHA DO TEMPO -->
+        <section id="tab-laboratorio" class="tab-content relative w-full max-w-5xl mx-auto no-print">
+            <div class="bg-white p-8 md:p-12 rounded-xl shadow-lg border border-stone-200">
+                <div class="flex flex-col md:flex-row items-center md:items-start gap-4 mb-8 border-b border-stone-200 pb-6 text-center md:text-left">
+                    <div class="p-4 bg-blue-50 text-blue-600 rounded-2xl shadow-sm border border-blue-100 flex-shrink-0">
+                        <i data-lucide="flask-conical" class="w-10 h-10"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-serif font-black text-stone-900 tracking-tight">Laboratório Visual do Tempo</h2>
+                        <p class="text-stone-600 mt-2 text-lg">Simulador Interativo dos Calendários Cristão, Judaico e Muçulmano</p>
+                    </div>
+                </div>
+
+                <div class="bg-stone-50 p-6 rounded-xl border-l-4 border-bronze-500 mb-10 shadow-sm">
+                    <p class="text-stone-700 leading-relaxed">
+                        A contagem do tempo histórico não é igual em todas as culturas. Enquanto a sociedade ocidental padronizou a <strong>Era Cristã</strong> (que tem como ponto de partida o nascimento de Jesus Cristo), o <strong>Calendário Judaico</strong> inicia-se na data assumida da criação do mundo (ano 3760 a.C.). Por seu lado, o <strong>Calendário Muçulmano</strong> tem o seu marco inicial na Hégira, ou seja, na fuga do profeta Maomé de Meca para Medina (ano 622 d.C.). <br><br><strong>Utilize o controlo deslizante abaixo</strong> para viajar no tempo e comparar em que ano civil as três grandes religiões se encontram nesse exato momento histórico!
+                    </p>
+                </div>
+
+                <!-- Controlos do Simulador -->
+                <div class="bg-white p-6 md:p-8 rounded-2xl border-2 border-stone-200 mb-10 shadow-[0_4px_20px_rgba(0,0,0,0.03)]">
+                    <label class="flex items-center gap-2 text-sm font-black text-stone-800 mb-6 uppercase tracking-wider">
+                        <i data-lucide="sliders-horizontal" class="w-5 h-5 text-bronze-600"></i> 
+                        Desloque a linha do tempo (Ano Base: Era Cristã)
+                    </label>
+                    <div class="flex flex-col md:flex-row items-center gap-6">
+                        <div class="w-full relative py-4">
+                            <input type="range" id="timeSlider" min="-3800" max="2050" value="1" class="w-full h-3 bg-stone-200 rounded-lg appearance-none cursor-pointer accent-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100" oninput="updateTimeLab()">
+                        </div>
+                        <div class="bg-stone-900 px-6 py-3 border-2 border-stone-700 rounded-xl font-mono font-black text-2xl text-white min-w-[160px] text-center shadow-inner flex-shrink-0">
+                            <span id="yearDisplay">1 d.C.</span>
+                        </div>
+                    </div>
+                    <div class="flex justify-between text-xs text-stone-400 mt-2 font-mono font-bold px-1 uppercase">
+                        <span>Antiguidade</span>
+                        <span>Cristo</span>
+                        <span>Mundo Atual</span>
+                    </div>
+                </div>
+
+                <!-- Visores Comparativos -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+                    
+                    <!-- Judaico -->
+                    <div class="bg-indigo-50/50 border-2 border-indigo-200 rounded-2xl p-6 text-center relative overflow-hidden shadow-sm transition-all hover:shadow-md hover:border-indigo-300">
+                        <i data-lucide="star" class="absolute -right-6 -bottom-6 w-36 h-36 text-indigo-100 opacity-60 transform rotate-12"></i>
+                        <h4 class="text-indigo-800 font-black uppercase text-[11px] mb-3 tracking-[0.2em] relative z-10 flex items-center justify-center gap-2">
+                            Calendário Judaico
+                        </h4>
+                        <p class="text-4xl font-black text-indigo-950 my-4 relative z-10 h-10 flex items-center justify-center" id="jewishYear">3761</p>
+                        <div class="inline-block bg-indigo-100 text-indigo-800 text-[10px] font-bold px-3 py-1 rounded-full relative z-10 uppercase tracking-wide">
+                            Início: 3760 a.C.
+                        </div>
+                    </div>
+
+                    <!-- Cristão (Destaque Central) -->
+                    <div class="bg-bronze-50 border-2 border-bronze-400 rounded-2xl p-6 text-center relative overflow-hidden shadow-lg transform lg:scale-110 z-10">
+                        <i data-lucide="cross" class="absolute -right-4 -bottom-4 w-40 h-40 text-bronze-100 opacity-50 transform -rotate-12"></i>
+                        <h4 class="text-bronze-800 font-black uppercase text-[11px] mb-3 tracking-[0.2em] relative z-10">
+                            Era Cristã
+                        </h4>
+                        <p class="text-5xl font-black text-bronze-950 my-4 relative z-10 h-12 flex items-center justify-center" id="christianYear">1 d.C.</p>
+                        <div class="inline-block bg-bronze-200 text-bronze-900 text-[10px] font-bold px-3 py-1 rounded-full relative z-10 uppercase tracking-wide">
+                            Início: Ano 1
+                        </div>
+                    </div>
+
+                    <!-- Muçulmano -->
+                    <div class="bg-emerald-50/50 border-2 border-emerald-200 rounded-2xl p-6 text-center relative overflow-hidden shadow-sm transition-all hover:shadow-md hover:border-emerald-300">
+                        <i data-lucide="moon" class="absolute -right-6 -bottom-6 w-36 h-36 text-emerald-100 opacity-60 transform -rotate-12"></i>
+                        <h4 class="text-emerald-800 font-black uppercase text-[11px] mb-3 tracking-[0.2em] relative z-10">
+                            Calendário Muçulmano
+                        </h4>
+                        <p class="text-4xl font-black text-emerald-950 my-4 relative z-10 h-10 flex items-center justify-center" id="muslimYear">---</p>
+                        <div class="inline-block bg-emerald-100 text-emerald-800 text-[10px] font-bold px-3 py-1 rounded-full relative z-10 uppercase tracking-wide">
+                            Início: 622 d.C. (Hégira)
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Gráfico Físico da Linha do Tempo -->
+                <div class="relative w-full h-32 bg-stone-900 rounded-2xl border-4 border-stone-800 p-4 overflow-hidden shadow-xl mt-8">
+                    <!-- Linha Base -->
+                    <div class="absolute top-1/2 left-6 right-6 h-1 bg-stone-700 -translate-y-1/2 rounded"></div>
+                    
+                    <!-- Marcos Fixos na Linha Físico-Matemática -->
+                    <!-- Judaico (-3760) -> (( -3760 - (-3800) ) / 5850) * 100 = ~0.68% -->
+                    <div class="absolute top-1/2 -translate-y-1/2 flex flex-col items-center z-10" style="left: 4%;">
+                        <div class="w-4 h-4 bg-indigo-500 rounded-full border-4 border-stone-900 shadow-[0_0_10px_rgba(99,102,241,0.8)]"></div>
+                        <span class="text-[10px] font-bold text-indigo-300 mt-3 uppercase tracking-wider">Criação</span>
+                    </div>
+                    
+                    <!-- Cristão (1) -> (( 1 - (-3800) ) / 5850) * 100 = ~64.97% -->
+                    <div class="absolute top-1/2 -translate-y-1/2 flex flex-col items-center z-10" style="left: 64.97%;">
+                        <div class="w-5 h-5 bg-bronze-500 rounded-full border-4 border-stone-900 shadow-[0_0_12px_rgba(216,126,85,0.8)]"></div>
+                        <span class="text-[10px] font-bold text-bronze-400 mt-3 uppercase tracking-wider">Cristo</span>
+                    </div>
+                    
+                    <!-- Muçulmano (622) -> (( 622 - (-3800) ) / 5850) * 100 = ~75.58% -->
+                    <div class="absolute top-1/2 -translate-y-1/2 flex flex-col items-center z-10" style="left: 75.58%;">
+                        <div class="w-4 h-4 bg-emerald-500 rounded-full border-4 border-stone-900 shadow-[0_0_10px_rgba(16,185,129,0.8)]"></div>
+                        <span class="text-[10px] font-bold text-emerald-400 mt-3 uppercase tracking-wider">Hégira</span>
+                    </div>
+
+                    <!-- Cursor Deslizante (Onde o utilizador está) -->
+                    <div id="timeCursor" class="absolute top-0 bottom-0 w-0.5 bg-blue-500 transition-all duration-75 flex flex-col items-center justify-between py-1 z-20 shadow-[0_0_15px_rgba(59,130,246,1)]" style="left: 64.97%;">
+                        <div class="w-5 h-5 bg-white rounded-md rotate-45 border-4 border-blue-600 shadow-md"></div>
+                        <div class="w-5 h-5 bg-white rounded-md rotate-45 border-4 border-blue-600 shadow-md"></div>
+                    </div>
+                </div>
+                
+                <div class="mt-5 bg-stone-50 border border-stone-200 p-4 rounded-lg flex items-start gap-3">
+                    <i data-lucide="info" class="w-5 h-5 text-stone-400 flex-shrink-0 mt-0.5"></i>
+                    <p class="text-xs text-stone-500 text-left font-medium leading-relaxed">
+                        <strong>Nota Técnica:</strong> O cálculo do calendário muçulmano baseia-se tradicionalmente num ano lunar, que é cerca de 11 dias mais curto do que o ano solar (gregoriano). Por esse motivo, para garantir exatidão histórica neste simulador, aplicou-se um fator de correção matemático na apresentação dos anos após a Hégira (ano 622 d.C.).
+                    </p>
+                </div>
             </div>
         </section>
 
@@ -721,6 +845,7 @@
                 <ul>
                     <li><strong>Estudo & Multimédia:</strong> Leia o contexto histórico e use a galeria visual ou o áudio.</li>
                     <li><strong>Resumos Temáticos:</strong> Expanda as secções para ler os detalhes técnicos originais compilados.</li>
+                    <li><strong>Lab. Cronológico:</strong> Experimente o simulador de tempo visual para entender as diferenças entre os calendários Cristão, Judaico e Muçulmano.</li>
                     <li><strong>Quiz Cards:</strong> Pratique! Tem de conseguir escolher a opção certa para revelar a justificação nas costas do cartão.</li>
                     <li><strong>Quiz Formativo:</strong> Desafie os seus conhecimentos em 25 perguntas exclusivas, com feedback formativo imediato, e obtenha o seu Certificado de Mérito no final.</li>
                     <li><strong>Campeonato:</strong> O Teste Supremo. Tente colecionar os 5 Emblemas acertando a todas as questões de cada bloco de desafio sem falhar!</li>
@@ -767,12 +892,13 @@
 
             renderFlashcards();
             initQuiz();
+            updateTimeLab(); // Inicializa o Laboratório
         });
 
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => {
-                el.classList.remove('active', 'border-bronze-500', 'text-bronze-400', 'border-amber-500', 'text-amber-500');
+                el.classList.remove('active', 'border-bronze-500', 'text-bronze-400', 'border-amber-500', 'text-amber-500', 'border-blue-500', 'text-blue-500');
                 el.classList.add('border-transparent', 'text-stone-400');
             });
             document.getElementById('tab-' + tabId).classList.add('active');
@@ -781,6 +907,8 @@
                 btn.classList.remove('border-transparent', 'text-stone-400');
                 if(tabId === 'campeonato') {
                     btn.classList.add('active', 'border-amber-500', 'text-amber-500');
+                } else if(tabId === 'laboratorio') {
+                    btn.classList.add('active', 'border-blue-500', 'text-blue-500');
                 } else {
                     btn.classList.add('active', 'border-bronze-500', 'text-bronze-400');
                 }
@@ -853,6 +981,46 @@
                 document.body.appendChild(conf);
                 setTimeout(() => conf.remove(), 4000);
             }
+        }
+
+
+        /* ================= LABORATÓRIO DO TEMPO (LÓGICA) ================= */
+        function updateTimeLab() {
+            const slider = document.getElementById('timeSlider');
+            let cYear = parseInt(slider.value);
+            
+            // Historicly, there is no year 0. If slider hits 0, make it 1
+            if (cYear === 0) cYear = 1; 
+
+            // Visor Cristão
+            const cText = cYear < 0 ? `${Math.abs(cYear)} a.C.` : `${cYear} d.C.`;
+            document.getElementById('yearDisplay').innerText = cText;
+            document.getElementById('christianYear').innerText = cText;
+
+            // Visor Judaico
+            let jYear = cYear < 0 ? 3761 + cYear : cYear + 3760;
+            if(jYear <= 0) jYear = "Pré-Criação";
+            document.getElementById('jewishYear').innerText = typeof jYear === "number" ? `Ano ${jYear}` : jYear;
+
+            // Visor Muçulmano
+            const mYearElem = document.getElementById('muslimYear');
+            if (cYear < 622) {
+                mYearElem.innerText = "Pré-Hégira";
+                mYearElem.className = "text-2xl font-black text-emerald-950 my-4 relative z-10 h-10 flex items-center justify-center";
+            } else {
+                // Cálculo aproximado corrigido pelo calendário lunar
+                const mYear = Math.floor((cYear - 622) * 1.030684) + 1;
+                mYearElem.innerText = `Ano ${mYear}`;
+                mYearElem.className = "text-4xl font-black text-emerald-950 my-4 relative z-10 h-10 flex items-center justify-center";
+            }
+
+            // Posicionar o Cursor na Linha Visual
+            // O Range vai de -3800 até 2050 (amplitude = 5850 anos)
+            const minYear = -3800;
+            const span = 5850;
+            const pct = ((cYear - minYear) / span) * 100;
+            
+            document.getElementById('timeCursor').style.left = `${pct}%`;
         }
 
 
