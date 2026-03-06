@@ -215,6 +215,9 @@
                         
                         <p class="text-lg leading-relaxed text-stone-700">A conquista romana da Península Ibérica não foi um ato rápido, mas sim um processo árduo e descontínuo que durou cerca de duzentos anos, de <strong>218 a.C. até 19 a.C.</strong> O interesse inicial de Roma não era a "civilização", mas sim o controlo geoestratégico do Mediterrâneo (o seu <em>mare nostrum</em>) e o acesso aos imensos recursos minerais, especialmente as minas de ouro (como <em>Las Médulas</em>), prata, e ferro.</p>
 
+                        <h3 class="text-2xl font-serif text-stone-800 mt-8">A Romanização</h3>
+                        <p>Influência exercida pelos Romanos sobre os territórios e povos conquistados.</p>
+
                         <h3 class="text-2xl font-serif text-stone-800 mt-8">A Feroz Resistência Indígena</h3>
                         <p>O avanço romano enfrentou uma oposição tenaz, destacando-se a resistência dos Lusitanos. Liderados por <strong>Viriato</strong>, um brilhante estratega que sobreviveu ao massacre do pretor Galba, os Lusitanos recorreram a táticas de guerrilha e emboscadas. Conhecedores das regiões montanhosas, infligiram severas e humilhantes derrotas às legiões romanas. A incapacidade militar de Roma forçou-a a recorrer à traição, subornando aliados de Viriato para o assassinarem enquanto dormia em 139 a.C., precipitando a queda lusitana.</p>
 
@@ -228,6 +231,7 @@
                             <li><strong>Urbanismo Monumental:</strong> Construção de cidades (<em>civitas</em>) à semelhança de Roma, dotadas de fóruns, aquedutos, teatros e termas, que serviam como poderosa propaganda ideológica.</li>
                             <li><strong>Logística:</strong> Uma intrincada rede de calçadas interligou o território, permitindo o rápido escoamento de riquezas, mas também a rápida difusão de ideias e cultura.</li>
                             <li><strong>Latim e Direito:</strong> O latim vulgar sobrepôs-se às línguas locais, unificando a península e lançando as bases do português e castelhano. O Direito Romano forneceu estabilidade e regulação à propriedade.</li>
+                            <li><strong>Desenvolvimento das Atividades Económicas:</strong> os Romanos trouxeram para a península várias técnicas agrícolas, artesanais e comerciais que melhoraram a economia das regiões ocupadas. Na agricultura introduziram novas culturas, como a oliveira e a vinha, e intensificaram a produção de trigo e árvores de fruto; exploraram as minas ibéricas; no artesanato desenvolveram a prática da salga de peixe, a olaria e a cestaria. O comércio também cresceu devido à facilidade de circulação de produtos dentro de todo o império, por via terrestre e marítima, e também motivado pela generalização do uso da moeda.</li>
                         </ul>
 
                         <h3 class="text-2xl font-serif text-stone-800 mt-8">A Transição Religiosa: A Cristianização</h3>
@@ -278,6 +282,16 @@
                             <source src="./podcast.mp3" type="audio/mpeg">
                             O seu navegador não suporta a tag de áudio.
                         </audio>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-stone-200">
+                        <h3 class="font-serif font-bold text-stone-800 mb-4 flex items-center gap-2">
+                            <i data-lucide="map" class="w-5 h-5 text-bronze-600"></i> Mapa do Império
+                        </h3>
+                        <button onclick="openGallery('mapa', 1)" class="w-full relative group overflow-hidden rounded-lg aspect-video bg-stone-100 border border-stone-200 hover:border-bronze-400 transition-colors flex flex-col items-center justify-center p-4">
+                            <i data-lucide="zoom-in" class="w-8 h-8 text-stone-400 group-hover:text-bronze-500 mb-2 transition-colors"></i>
+                            <span class="text-sm font-medium text-stone-600 group-hover:text-bronze-700">Ver Mapa do Império Romano</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -803,7 +817,11 @@
         function updateGalleryImage() {
             const img = document.getElementById('galleryImage');
             img.style.opacity = '0';
-            let src = currentGalleryType === 'infografia' ? './infografia.jpg' : `./Diapositivo${currentSlideIndex}.jpg`;
+            let src = '';
+            if (currentGalleryType === 'infografia') src = './infografia.jpg';
+            else if (currentGalleryType === 'mapa') src = './mapa.jpg';
+            else src = `./Diapositivo${currentSlideIndex}.jpg`;
+            
             setTimeout(() => { img.src = src; img.onload = () => img.style.opacity = '1'; }, 150);
             document.getElementById('galleryCounter').innerText = `${currentSlideIndex}/${totalSlides}`;
         }
